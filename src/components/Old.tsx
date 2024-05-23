@@ -1,23 +1,14 @@
 "use client";
-import { Post } from "@/types/post";
-import { useEffect, useState } from "react";
+import { usePost } from "@/services/queries";
 
 export default function Old() {
-  const [post, setPost] = useState<Post[]>([]);
+  const {data,isLoading} = usePost();
 
-  useEffect(() => {
-    fetch("http://localhost:8080/posts")
-      .then((res) => res.json())
-      .then((data) => setPost(data))
-      .catch((error) => console.error(error));
-  });
-
-  if (!post.length) return <p>Loading .....</p>;
-
+  if (isLoading) return <div>Loading...</div>;
   return (
     <ul>
-      {post.map((p) => (
-        <li key={p.id}>{p.title}</li>
+      {data?.map((d : any) => (
+        <li key={d.id}>{d.title}</li>
       ))}
     </ul>
   );

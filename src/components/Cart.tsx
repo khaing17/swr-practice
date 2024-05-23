@@ -1,11 +1,19 @@
-"use client"
-import { useCart } from "@/services/queries"
+"use client";
+import { useCart, useUser } from "@/services/queries";
 
 const Cart = () => {
-    const cartQuery = useCart()
+  const userQuery = useUser();
+  const cartQuery = useCart();
   return (
-    <div>{cartQuery.data?.totalCost}</div>
+    <div>
+      <p>
+        User Name: {''} {userQuery.isLoading? "Loading" : userQuery.data?.userName}
+      </p>
+      <p>
+        Total Cost : {''} {cartQuery.isLoading ? "Loading" : cartQuery.data?.totalCost}
+      </p>
+    </div>
   )
-}
+};
 
-export default Cart
+export default Cart;
